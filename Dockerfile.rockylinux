@@ -1,0 +1,14 @@
+FROM rockylinux:9
+
+# Add the -fPIE compiler option because net-snmp requires it.
+
+RUN mkdir /work
+RUN dnf -y update
+RUN dnf -y install autoconf automake libtool glib2-devel bison flex \
+    net-snmp-devel libtool which diffutils
+COPY . /work/
+RUN cp /usr/share/automake-1.*/config.guess .
+RUN cp /usr/share/automake-1.*/config.sub .
+RUN cd /work && ./autogen.sh
+RUN cd /work && ./configure CFLAGS=-fPIE
+RUN cd /work && make && make install
