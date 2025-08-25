@@ -1,4 +1,4 @@
-FROM rockylinux:9
+FROM rockylinux/rockylinux:9.6
 
 # Add the -fPIE compiler option because net-snmp requires it.
 
